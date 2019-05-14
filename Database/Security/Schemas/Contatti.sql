@@ -1,0 +1,3 @@
+CREATE SCHEMA [Contatti]
+AUTHORIZATION [dbo]
+GO

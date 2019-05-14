@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Backoffice", "Backoffice\Backoffice.vbproj", "{5D3AD3B5-4591-436C-B2AF-4E894D30E891}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WCFAPI", "WCFAPI\WCFAPI.vbproj", "{47FAA73E-3950-4A34-A4C3-A5C69D2DE9BA}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BusinessLayer", "BusinessLayer\BusinessLayer.vbproj", "{0EA4FADE-E64B-45ED-9998-DE5C7A8A9113}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataLayer", "DataLayer\DataLayer.vbproj", "{B801EF22-2125-4DF5-9287-D07C2822ECA3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ModelLayer", "ModelLayer\ModelLayer.vbproj", "{1484379E-D84E-4383-85E1-CFA0606CBDFE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WCFServer", "WCFServer\WCFServer.vbproj", "{308EEFBD-BBE0-4D3E-BFF0-917AB2959D12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D3AD3B5-4591-436C-B2AF-4E894D30E891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D3AD3B5-4591-436C-B2AF-4E894D30E891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D3AD3B5-4591-436C-B2AF-4E894D30E891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D3AD3B5-4591-436C-B2AF-4E894D30E891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47FAA73E-3950-4A34-A4C3-A5C69D2DE9BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FAA73E-3950-4A34-A4C3-A5C69D2DE9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FAA73E-3950-4A34-A4C3-A5C69D2DE9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FAA73E-3950-4A34-A4C3-A5C69D2DE9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA4FADE-E64B-45ED-9998-DE5C7A8A9113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA4FADE-E64B-45ED-9998-DE5C7A8A9113}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA4FADE-E64B-45ED-9998-DE5C7A8A9113}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA4FADE-E64B-45ED-9998-DE5C7A8A9113}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B801EF22-2125-4DF5-9287-D07C2822ECA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B801EF22-2125-4DF5-9287-D07C2822ECA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B801EF22-2125-4DF5-9287-D07C2822ECA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B801EF22-2125-4DF5-9287-D07C2822ECA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1484379E-D84E-4383-85E1-CFA0606CBDFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1484379E-D84E-4383-85E1-CFA0606CBDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1484379E-D84E-4383-85E1-CFA0606CBDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1484379E-D84E-4383-85E1-CFA0606CBDFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308EEFBD-BBE0-4D3E-BFF0-917AB2959D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308EEFBD-BBE0-4D3E-BFF0-917AB2959D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308EEFBD-BBE0-4D3E-BFF0-917AB2959D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308EEFBD-BBE0-4D3E-BFF0-917AB2959D12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.0.22:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Backoffice\\Backoffice.vbproj
+		SccProjectName1 = Backoffice
+		SccLocalPath1 = Backoffice
+		SccProjectUniqueName2 = WCFAPI\\WCFAPI.vbproj
+		SccProjectName2 = WCFAPI
+		SccLocalPath2 = WCFAPI
+		SccProjectUniqueName3 = BusinessLayer\\BusinessLayer.vbproj
+		SccProjectName3 = BusinessLayer
+		SccLocalPath3 = BusinessLayer
+		SccProjectUniqueName4 = DataLayer\\DataLayer.vbproj
+		SccProjectName4 = DataLayer
+		SccLocalPath4 = DataLayer
+		SccProjectUniqueName5 = ModelLayer\\ModelLayer.vbproj
+		SccProjectName5 = ModelLayer
+		SccLocalPath5 = ModelLayer
+		SccProjectUniqueName6 = WCFServer\\WCFServer.vbproj
+		SccProjectName6 = WCFServer
+		SccLocalPath6 = WCFServer
+	EndGlobalSection
+EndGlobal
