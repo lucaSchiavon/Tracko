@@ -103,6 +103,7 @@
     <Compile Include="System\ManagerPermessi.vb" />
     <Compile Include="System\Newsletter\ManagerNewsletter.vb" />
     <Compile Include="System\RandomKeyGenerator.vb" />
+    <Compile Include="Utenti\ManagerConfermaConsensi.vb" />
     <Compile Include="Utenti\ManagerTipoAccettazioni.vb" />
     <Compile Include="Utenti\ManagerPolicy.vb" />
     <Compile Include="Utenti\ManagerAccettazioni.vb" />

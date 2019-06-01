@@ -5,6 +5,7 @@ Imports Microsoft.AspNet.Identity
 Imports ModelLayer
 Imports ModelLayer.Back.DatatableResponse
 Imports System.Linq.Dynamic
+Imports System.IO
 
 Public Class AccettazioniStorico2Controller
     Inherits WebControllerBase
@@ -20,20 +21,8 @@ Public Class AccettazioniStorico2Controller
         If Not Me.oManagerPermessi.HasModuloAccettazioniStorico() Then
             Return Redirect(oConfig.HttpPath)
         End If
-        Dim _clienteId As Integer
-        If oUtente.ClienteID Is Nothing Then
-            _clienteId = 0
-        Else
-            _clienteId = oUtente.ClienteID
 
-        End If
-        Dim model As New Model.AccettazioniStorico.AccettazioniStoricoMaskModel
-        With model
-            '.LinguaList = New SelectList(New ManagerAccettazioniStorico)
-            .TipoConsensoList = New SelectList(New ManagerTipoAccettazioni().TipoAccettazioni_GetList(_clienteId), "Id", "TipoAccettazione")
-            .LinguaList = New SelectList(New ManagerLingue().GetAllLingue_List(_clienteId), "Id", "Nome")
-        End With
-        Return View(Me.GetRenderViewName("AccettazioniStorico2/Index"), model)
+        Return GetIndexViewResult()
     End Function
 
     <HttpPost>
@@ -59,8 +48,6 @@ Public Class AccettazioniStorico2Controller
             ClienteId = oUtente.ClienteID
         End If
 
-
-        'Dim oList As List(Of ModelLayer.Back.Elenchi.AccettazioniStoricoListItem) = New ManagerAccettazioniStorico().Back_GetListAccettazioniStorico(, ClienteId)
         Dim oList As List(Of ModelLayer.Back.Elenchi.AccettazioniStoricoListItem) = New ManagerAccettazioniStorico().Back_GetListAccettazioniStorico2(model, filteredResultsCount, totalResultsCount, ClienteId)
         For Each oAccSto As ModelLayer.Back.Elenchi.AccettazioniStoricoListItem In oList
             Dim oAccStoMod As New Model.API.AccettazioniStorico.GetList.AccettazioniStoricoItemModel
@@ -102,32 +89,63 @@ Public Class AccettazioniStorico2Controller
 
         oListStoricoAccettazioni = oListStoricoAccettazioni.OrderBy(sortBy + " " + sortDir).ToList()
         oListStoricoAccettazioni = oListStoricoAccettazioni.Skip(skip).Take(take).ToList()
-        ' oResult.data = oListStoricoAccettazioni
-        'Dim risultato = New With {Key .draw = model.draw, .recordsTotal = totalResultsCount, .recordsFiltered = filteredResultsCount, .Data = oListStoricoAccettazioni}
-        'Dim risultato As New AccettazioniStoricoDtAjaxBackModel()
-        'With risultato
-        '    .draw = model.draw
-        '    .recordsTotal = totalResultsCount
-        '    .recordsFiltered = filteredResultsCount
-        '    .Data = oListStoricoAccettazioni
 
-        'End With
-        'Return Json(risultato)
-        'Return New JsonResult With {.draw = model.draw, .recordsTotal = totalResultsCount, .recordsFiltered = filteredResultsCount, .Data = oListStoricoAccettazioni, .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
-        'Return oResult
-        'Dim Ojsn As JsonResult = Json(New With {.draw = model.draw, .recordsTotal = totalResultsCount, .recordsFiltered = filteredResultsCount, .Data = oListStoricoAccettazioni}, JsonRequestBehavior.AllowGet)
         Return Json(New With {.draw = model.draw, .recordsTotal = totalResultsCount, .recordsFiltered = filteredResultsCount, .data = oListStoricoAccettazioni}, JsonRequestBehavior.AllowGet)
     End Function
 
 
 
+    Public Function EsportaCSV(datiInput As String) As ActionResult
 
+        Try
 
+            Dim ClienteId As Integer = 0
 
+            If Not Me.oUtente.ClienteID Is Nothing Then
+                ClienteId = oUtente.ClienteID
+            End If
+            Dim oList As List(Of ModelLayer.Back.Elenchi.AccettazioniStoricoListItem) = New ManagerAccettazioniStorico().Back_GetListAccettazioniStorico2ForExportCSV(datiInput, ClienteId)
+            Dim sb As New StringBuilder()
+            sb.Append("Email Contatto;Tipo di consenso;Conferma;Data modifica;Scadenza consenso;Lingua" & vbCrLf)
+            'qui scorrersi la lista e creare il csv
+            For Each currRow As ModelLayer.Back.Elenchi.AccettazioniStoricoListItem In oList
+                sb.Append(currRow.EmailContatto & ";" & currRow.NomeConsenso & ";" & currRow.ValoreConsenso & ";" & currRow.DataInserimento & ";" & currRow.ScadenzaConsenso & ";" & currRow.Lingua & vbCrLf)
+            Next
 
+            ' Dim s As String = "test"
+            Dim Buffer As Byte() = System.Text.Encoding.UTF8.GetBytes(sb.ToString())
+            Return File(Buffer, "text/csv", "SearchList.csv")
 
-    'Private Function GetPasswordErrorMessage() As String
-    '    Return "La password deve contenere almeno 8 caratteri.<br />La password deve contenere almeno un carattere non alfanumerico.<br />La password deve avere un carattere numerico (\'0\'-\'9\').<br />La password deve avere almeno una lettera maiuscola (\'A\'-\'Z\')."
-    'End Function
+        Catch ex As Exception
 
+            Dim oMessage As New Model.API.Common.MessageModel
+            With oMessage
+                .status = 0
+                .title = "Errore"
+                .text = "Si è verificato un errore nel download del tracciato CSV."
+                .id = 0
+            End With
+            TempData("Message") = oMessage
+
+            Return GetIndexViewResult()
+        End Try
+
+    End Function
+
+    Public Function GetIndexViewResult()
+        Dim _clienteId As Integer
+        If oUtente.ClienteID Is Nothing Then
+            _clienteId = 0
+        Else
+            _clienteId = oUtente.ClienteID
+
+        End If
+        Dim model As New Model.AccettazioniStorico.AccettazioniStoricoMaskModel
+        With model
+            '.LinguaList = New SelectList(New ManagerAccettazioniStorico)
+            .TipoConsensoList = New SelectList(New ManagerTipoAccettazioni().TipoAccettazioni_GetList(_clienteId), "Id", "TipoAccettazione")
+            .LinguaList = New SelectList(New ManagerLingue().GetAllLingue_List(_clienteId), "Id", "Nome")
+        End With
+        Return View(Me.GetRenderViewName("AccettazioniStorico2/Index"), model)
+    End Function
 End Class

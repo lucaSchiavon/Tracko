@@ -2,6 +2,29 @@
 Imports System.Data.Common
 Public Class TraduzioniRepository
 
+
+    Public Function getVariabiliTraduzioni(ByVal Variabile As String,
+                                       ByVal LinguaID As Integer) As String
+
+
+        Using ConnectionMananger As New ConnectionMananger()
+
+            ConnectionMananger.AddOrReplaceParameter("Nome", Variabile)
+            ConnectionMananger.AddOrReplaceParameter("LinguaId", LinguaID, SqlDbType.Int)
+
+
+            Dim dr As DbDataReader = ConnectionMananger.GetDataReader("[General].[VariabiliTraduzioni_GetList]", CommandType.StoredProcedure)
+            If dr.HasRows Then
+                dr.Read()
+                Return dr("Testo")
+
+            End If
+            Return String.Empty
+        End Using
+
+    End Function
+
+
     Public Function getTextByVariabile(ByVal Variabile As String,
                                        ByVal LinguaID As Integer,
                                         ByVal IsDefault As Boolean) As String

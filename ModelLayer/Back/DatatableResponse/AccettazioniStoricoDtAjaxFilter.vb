@@ -84,6 +84,16 @@ Namespace Back.DatatableResponse
                 _Lingua = value
             End Set
         End Property
+
+        Private _Conferma As String
+        Public Property Conferma As String
+            Get
+                Return _Conferma
+            End Get
+            Set(ByVal value As String)
+                _Conferma = value
+            End Set
+        End Property
     End Class
 
 

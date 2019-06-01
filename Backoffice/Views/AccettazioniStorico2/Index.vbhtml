@@ -14,8 +14,9 @@ End Code
                 </div>
             </div>
             <div class="portlet-body">
-                <button data-toggle="collapse" data-target="#demo" class="btn btn-primary"><i class="fa fa-search"></i></button>
 
+                <button data-toggle="collapse" data-target="#demo" class="btn btn-primary"><i class="fa fa-search"></i> Filtra</button>
+                <button   class="btn btn-primary" id="BtnEsportaCSV"><i class="fa fa-file-text-o"></i> Esporta in CSV</button>
                 <div id="demo" class="collapse">
 
 
@@ -25,7 +26,7 @@ End Code
                     <div class="form-group">
                         <hr />
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     Email
@@ -66,10 +67,10 @@ End Code
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Tipo consenso
+                                    Consenso
                                 </div>
                                 <div class="panel-body" style="height:148px">
                                     @Html.DropDownListFor(Function(model) model.IdCons, Model.TipoConsensoList, "Seleziona...", New With {.Class = "form-control selectpicker"})
@@ -78,6 +79,23 @@ End Code
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Conferma
+                                </div>
+                                <div class="panel-body" style="height:148px">
+                                    @Html.DropDownList("ConsensoConferma", New SelectListItem() {
+         New SelectListItem With {.Text = "SI", .Value = "TRUE"},
+         New SelectListItem With {.Text = "No", .Value = "FALSE"}
+         }, "Seleziona...", New With {.Class = "form-control selectpicker"})
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="col-md-2">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -123,9 +141,9 @@ End Code
 
                 </div>
             </div>
-        </div>
-        <!-- END SAMPLE TABLE PORTLET-->
-    </div>
+                </div>
+                <!-- END SAMPLE TABLE PORTLET-->
+            </div>
 </div>
 @section scripts
     <script type="text/javascript">
@@ -138,7 +156,7 @@ End Code
                                                 bindEvents();
                                             };
 
-                                            var settingFilter = function() {
+                                            var settingFilter = function () {
                                                 $.fn.dataTable.ext.search.push(
                                                     function (settings, data, dataIndex) {
                                                         if (!filterNome(settings, dataIndex))
@@ -156,14 +174,15 @@ End Code
                                                         return true;
                                                     }
                                                 );
-                                            }
+                                            };
 
 
                                             var buildTable = function() {
-                                                tElenco = $('#tableStoricoAccettazioni').DataTable({
-                                                    "dom": '<"top"i>rt<"bottom"1p><"clear">', //nasconde la ricerca builtin
+                                                tElenco = $('#tableStoricoAccettazioni').DataTable({      
+                                                    "dom": '<"top"i>rt<"bottom"1p><"clear">', // '<"top"i>rt<"bottom"1p><"clear">', // 'Bfrtip' nasconde la ricerca builtin   "buttons": [ 'copy', 'csv', 'excel', 'pdf', 'print'],
                                                     "processing": true,
                                                     "serverSide": true,
+                                                    "pageLength": 50,
                                                     "ajax": {
                                                         "url": "/AccettazioniStorico2/GetList",
                                                         "type": "post",
@@ -197,9 +216,16 @@ End Code
                                             var bindEvents = function() {
 
                                                 $('#btnSearch').click(function (e) {
+                                                
                                                     e.preventDefault();
                                                     tElenco.search(getSerachArr());
                                                     tElenco.draw();
+                                                });
+
+                                                $('#BtnEsportaCSV').click(function (e) {
+                                                    e.preventDefault();
+                                                    var SearchStr= getSerachArr();
+                                                    ExportDataToCsv(SearchStr);
                                                 });
 
                                             };
@@ -211,11 +237,17 @@ End Code
                                                 SearchArr += "'DataModificaA':'" + $('#FiltroDataModificaA').val().trim() + "',";
                                                 SearchArr += "'ScadenzaConsensoDa':'" + $('#FiltroScadenzaConsensoDa').val().trim() + "',";
                                                 SearchArr += "'ScadenzaConsensoA':'" + $('#FiltroScadenzaConsensoA').val().trim() + "',";
+                                                SearchArr += "'Conferma':'" + $('#ConsensoConferma').val().trim() + "',";
                                                 SearchArr += "'TipoConsenso':'" + $('#IdCons').val().trim() + "',";
                                                 SearchArr += "'Lingua':'" + $('#IdLingua').val().trim() + "'}";
                                                 return SearchArr;
-                                            }
-                                        
+                                            };
+
+                                   
+
+                                            var ExportDataToCsv = function (SearchStr) {
+                                                window.location = "/AccettazioniStorico2/EsportaCSV?datiInput=" + SearchStr;
+                                            };
 
                                             return {
                                                 init: init

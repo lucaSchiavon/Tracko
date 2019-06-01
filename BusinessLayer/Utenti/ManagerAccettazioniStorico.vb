@@ -125,6 +125,7 @@ Public Class ManagerAccettazioniStorico
             OSearchBy.ScadenzaConsensoA = ""
             OSearchBy.Lingua = 0
             OSearchBy.TipoConsenso = 0
+            OSearchBy.Conferma = ""
         End If
 
         Dim take = model.length
@@ -152,6 +153,50 @@ Public Class ManagerAccettazioniStorico
 
     End Function
 
+    Public Function Back_GetListAccettazioniStorico2ForExportCSV(Filtri As String,
+                                       Optional ByVal ClienteId As Integer = 0) As List(Of Elenchi.AccettazioniStoricoListItem)
+
+        Dim OSearchBy As AccettazioniStoricoDtAjaxFilter
+        'If (Not Filtri <> "") Then
+
+        OSearchBy = Newtonsoft.Json.JsonConvert.DeserializeObject(Of AccettazioniStoricoDtAjaxFilter)(Filtri)
+        'Else
+
+        'OSearchBy = New AccettazioniStoricoDtAjaxFilter()
+
+        '    OSearchBy.NomeUtente = ""
+        '    OSearchBy.DataModificaDa = ""
+        '    OSearchBy.DataModificaA = ""
+        '    OSearchBy.ScadenzaConsensoDa = ""
+        '    OSearchBy.ScadenzaConsensoA = ""
+        '    OSearchBy.Lingua = 0
+        '    OSearchBy.TipoConsenso = 0
+        '    OSearchBy.Conferma = ""
+        'End If
+
+        Dim result = New AccettazioniStoricoRepository().Back_AccettazioniStorico_GetList2ForExportCSV(OSearchBy, ClienteId)
+
+        If result Is Nothing Then
+            Return New List(Of Elenchi.AccettazioniStoricoListItem)
+        Else
+            Return result
+        End If
+
+    End Function
+
+    Public Function Back_GetListAccettazioniStorico(ContattoGuidKey As String) As List(Of Elenchi.AccettazioniStoricoListItem)
+        'questa routine per ottenere lo storico accettazioni dato un contatto
+
+        Dim result = New AccettazioniStoricoRepository().Back_AccettazioniStorico_GetAccettazioniStorico(ContattoGuidKey)
+
+        If result Is Nothing Then
+            Return New List(Of Elenchi.AccettazioniStoricoListItem)
+        Else
+            Return result
+        End If
+
+
+    End Function
 End Class
 
 

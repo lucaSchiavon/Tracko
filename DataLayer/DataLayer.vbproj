@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="System\NewsletterListRepository.vb" />
     <Compile Include="System\PermessiRepository.vb" />
+    <Compile Include="Utenti\ConfermaConsensiRepository.vb" />
     <Compile Include="Utenti\TipoAccettazioneRepository.vb" />
     <Compile Include="Utenti\PolicyRepository.vb" />
     <Compile Include="Utenti\AccettazioneRepository.vb" />

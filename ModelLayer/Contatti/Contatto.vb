@@ -6,5 +6,6 @@
     Public Property GuidKey As String
     Public Property IsAnonimized As Boolean
     Public Property IsDeleted As Boolean
+    Public Property LinguaId As Integer
 
 End Class

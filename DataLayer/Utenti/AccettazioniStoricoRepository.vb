@@ -81,6 +81,100 @@ Public Class AccettazioniStoricoRepository
             'If searchBy.DataModificaA <> "" Then
             '    _DataModificaA = CDate(searchBy.DataModificaA)
             'End If
+            'imposto a null il vsalore guidkey così viene bypassato...
+            ConnectionMananger.AddOrReplaceParameter("GuidKey", DBNull.Value, SqlDbType.UniqueIdentifier)
+
+
+            ConnectionMananger.AddOrReplaceParameter("EmailContatto", searchBy.NomeUtente)
+            ConnectionMananger.AddOrReplaceParameter("ClienteId", ClienteId, SqlDbType.Int)
+
+            If searchBy.DataModificaDa <> "" Then
+                ConnectionMananger.AddOrReplaceParameter("DataModificaDa", searchBy.DataModificaDa, SqlDbType.Date)
+            Else
+                ConnectionMananger.AddOrReplaceParameter("DataModificaDa", DBNull.Value, SqlDbType.Date)
+            End If
+
+            If searchBy.DataModificaA <> "" Then
+                ConnectionMananger.AddOrReplaceParameter("DataModificaA", searchBy.DataModificaA, SqlDbType.Date)
+            Else
+                ConnectionMananger.AddOrReplaceParameter("DataModificaA", DBNull.Value, SqlDbType.Date)
+            End If
+
+            If searchBy.ScadenzaConsensoDa <> "" Then
+                ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoDa", searchBy.ScadenzaConsensoDa, SqlDbType.Date)
+            Else
+                ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoDa", DBNull.Value, SqlDbType.Date)
+            End If
+            If searchBy.ScadenzaConsensoA <> "" Then
+                ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoA", searchBy.ScadenzaConsensoA, SqlDbType.Date)
+            Else
+                ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoA", DBNull.Value, SqlDbType.Date)
+            End If
+
+            'If searchBy.Conferma <> "" Then
+            ConnectionMananger.AddOrReplaceParameter("Conferma", searchBy.Conferma)
+            'Else
+            '    ConnectionMananger.AddOrReplaceParameter("Conferma", -1)
+            'End If
+
+
+
+
+            ConnectionMananger.AddOrReplaceParameter("LinguaId", CInt(searchBy.Lingua), SqlDbType.Int)
+            ConnectionMananger.AddOrReplaceParameter("TipoConsensoId", CInt(searchBy.TipoConsenso), SqlDbType.Int)
+
+            Dim oList As New List(Of Elenchi.AccettazioniStoricoListItem)
+            'TODO:definire la sp
+            Dim dr As DbDataReader = ConnectionMananger.GetDataReader("[Back].AccettazioniStorico_GetList", CommandType.StoredProcedure)
+            If dr.HasRows Then
+                While dr.Read()
+                    Dim oAccettazioneStorico As New Elenchi.AccettazioniStoricoListItem
+                    With oAccettazioneStorico
+                        .Id = dr("Id")
+                        .NomeCliente = dr("NomeCliente")
+                        ' .ClienteId = If(dr("ClienteId") Is DBNull.Value, Nothing, dr("ClienteId"))
+                        .EmailContatto = dr("EmailContatto")
+                        .DataInserimento = dr("DataInserimento")
+                        .ScadenzaConsenso = dr("ScadenzaConsenso")
+                        .NomeConsenso = dr("NomeConsenso")
+                        .SystemNameConsenso = dr("SystemNameConsenso")
+                        .ValoreConsenso = dr("ValoreConsenso")
+                        If IsDBNull(dr("LinguaId")) Then
+                            'se il contatto non ha lingua forza la lingua italiana
+                            .LinguaId = 1
+                        Else
+                            .LinguaId = dr("LinguaId")
+                        End If
+
+                        .IsDeleted = dr("IsDeleted")
+                        .Lingua = dr("Lingua")
+                        .TipoAccettazioneId = dr("TipoAccettazioneId")
+                    End With
+                    oList.Add(oAccettazioneStorico)
+                End While
+            End If
+            'settaggi che servono a jquery datatable...
+            filteredResultsCount = oList.Count()
+            totalResultsCount = oList.Count()
+
+            Return oList
+
+        End Using
+    End Function
+
+
+
+    Public Function Back_AccettazioniStorico_GetList2ForExportCSV(searchBy As AccettazioniStoricoDtAjaxFilter, Optional ByVal ClienteId As Integer = 0) As List(Of Elenchi.AccettazioniStoricoListItem)
+
+
+
+        Using ConnectionMananger As New ConnectionMananger()
+
+            ConnectionMananger.ClearParameters()
+
+            'imposto a null il vsalore guidkey così viene bypassato...
+            ConnectionMananger.AddOrReplaceParameter("GuidKey", DBNull.Value, SqlDbType.UniqueIdentifier)
+
 
             ConnectionMananger.AddOrReplaceParameter("EmailContatto", searchBy.NomeUtente)
             ConnectionMananger.AddOrReplaceParameter("ClienteId", ClienteId, SqlDbType.Int)
@@ -109,9 +203,68 @@ Public Class AccettazioniStoricoRepository
             End If
 
 
+            ConnectionMananger.AddOrReplaceParameter("Conferma", searchBy.Conferma)
+
             ConnectionMananger.AddOrReplaceParameter("LinguaId", CInt(searchBy.Lingua), SqlDbType.Int)
             ConnectionMananger.AddOrReplaceParameter("TipoConsensoId", CInt(searchBy.TipoConsenso), SqlDbType.Int)
 
+            Dim oList As New List(Of Elenchi.AccettazioniStoricoListItem)
+            'TODO:definire la sp
+            Dim dr As DbDataReader = ConnectionMananger.GetDataReader("[Back].AccettazioniStorico_GetList", CommandType.StoredProcedure)
+            If dr.HasRows Then
+                While dr.Read()
+                    Dim oAccettazioneStorico As New Elenchi.AccettazioniStoricoListItem
+                    With oAccettazioneStorico
+                        .Id = dr("Id")
+                        .NomeCliente = dr("NomeCliente")
+                        .EmailContatto = dr("EmailContatto")
+                        .DataInserimento = dr("DataInserimento")
+                        .ScadenzaConsenso = dr("ScadenzaConsenso")
+                        .NomeConsenso = dr("NomeConsenso")
+                        .SystemNameConsenso = dr("SystemNameConsenso")
+                        .ValoreConsenso = dr("ValoreConsenso")
+                        If IsDBNull(dr("LinguaId")) Then
+                            'se il contatto non ha lingua forza la lingua italiana
+                            .LinguaId = 1
+                        Else
+                            .LinguaId = dr("LinguaId")
+                        End If
+
+                        .IsDeleted = dr("IsDeleted")
+                        .Lingua = dr("Lingua")
+                        .TipoAccettazioneId = dr("TipoAccettazioneId")
+                    End With
+                    oList.Add(oAccettazioneStorico)
+                End While
+            End If
+            'settaggi che servono a jquery datatable...
+
+
+            Return oList
+
+        End Using
+    End Function
+
+
+    Public Function Back_AccettazioniStorico_GetAccettazioniStorico(ContattoGuidKey As String) As List(Of Elenchi.AccettazioniStoricoListItem)
+
+
+        Using ConnectionMananger As New ConnectionMananger()
+
+            ConnectionMananger.ClearParameters()
+
+
+            ConnectionMananger.AddOrReplaceParameter("GuidKey", New Guid(ContattoGuidKey), SqlDbType.UniqueIdentifier)
+            'bypassa tutti gli altri parametri
+            ConnectionMananger.AddOrReplaceParameter("EmailContatto", "")
+            ConnectionMananger.AddOrReplaceParameter("ClienteId", 0, SqlDbType.Int)
+            ConnectionMananger.AddOrReplaceParameter("DataModificaDa", DBNull.Value, SqlDbType.Date)
+            ConnectionMananger.AddOrReplaceParameter("DataModificaA", DBNull.Value, SqlDbType.Date)
+            ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoDa", DBNull.Value, SqlDbType.Date)
+            ConnectionMananger.AddOrReplaceParameter("ScadenzaConsensoA", DBNull.Value, SqlDbType.Date)
+            ConnectionMananger.AddOrReplaceParameter("LinguaId", 0, SqlDbType.Int)
+            ConnectionMananger.AddOrReplaceParameter("TipoConsensoId", 0, SqlDbType.Int)
+            ConnectionMananger.AddOrReplaceParameter("Conferma", "")
             Dim oList As New List(Of Elenchi.AccettazioniStoricoListItem)
             'TODO:definire la sp
             Dim dr As DbDataReader = ConnectionMananger.GetDataReader("[Back].AccettazioniStorico_GetList", CommandType.StoredProcedure)
@@ -136,10 +289,6 @@ Public Class AccettazioniStoricoRepository
                     oList.Add(oAccettazioneStorico)
                 End While
             End If
-            'settaggi che servono a jquery datatable...
-            filteredResultsCount = oList.Count()
-            totalResultsCount = oList.Count()
-
             Return oList
 
         End Using

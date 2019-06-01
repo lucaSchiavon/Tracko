@@ -18,4 +18,9 @@ Public Class ManagerTraduzioni
         Return New TraduzioniRepository().saveTextByVariabile(variabile, _LinguaId, text, isDefault)
     End Function
 
+    Public Function getVariabiliTraduzioni(ByVal variabile As String) As String
+
+        Return New TraduzioniRepository().getVariabiliTraduzioni(variabile, _LinguaId)
+    End Function
+
 End Class

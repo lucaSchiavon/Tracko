@@ -64,6 +64,18 @@ Public Class ManagerSorgenti
 
     End Function
 
+    Public Function Back_GetAllListSorgenti(Optional ByVal SystemName As String = "") As List(Of Elenchi.SorgentiListItem)
+        If String.IsNullOrEmpty(SystemName) Then
+            SystemName = String.Empty
+        End If
+
+        SystemName = SystemName.ToLower()
+
+        Dim oList As List(Of Elenchi.SorgentiListItem) = New SorgenteRepository().Back_Sorgenti_GetAllList(_ClienteId, , SystemName)
+        Return oList
+
+    End Function
+
     Public Function Back_Sorgente_InsertUpdate(ByVal oSorgente As Sorgente) As Integer
 
         Return New SorgenteRepository().Back_Sorgente_InsertUpdate(oSorgente)

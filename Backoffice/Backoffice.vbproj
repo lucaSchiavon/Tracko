@@ -227,6 +227,7 @@
     <Compile Include="App_Start\Startup.Auth.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
     <Compile Include="Controllers\AccettazioniStorico2Controller.vb" />
+    <Compile Include="Controllers\ConfermaConsensiController.vb" />
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\API\PermessiController.vb" />
     <Compile Include="Controllers\API\PolicyController.vb" />
@@ -251,6 +252,8 @@
     <Compile Include="Models\AccattazioniStorico\AccettazioniStoricoMaskModel.vb" />
     <Compile Include="Models\AccettazioniStorico2\AccettazioniStoricoDtAjaxBackModel.vb" />
     <Compile Include="Models\Accettazioni\AccettazioneMaskModel.vb" />
+    <Compile Include="Models\API\StoricoConsensiDatiData.vb" />
+    <Compile Include="Models\API\ConfermaConsensiData.vb" />
     <Compile Include="Models\API\PolicyData.vb" />
     <Compile Include="Models\API\PermessiData.vb" />
     <Compile Include="Models\API\AccettazioniData.vb" />
@@ -275,6 +278,8 @@
     <Compile Include="Models\API\WS\PolicyData.vb" />
     <Compile Include="Models\Clienti\ClienteMaskModel.vb" />
     <Compile Include="Models\Common\MenuSistemaViewModel.vb" />
+    <Compile Include="Models\ConfermaConsensi\ThanksMaskModel.vb" />
+    <Compile Include="Models\ConfermaConsensi\ConfermaConsensiMaskModel.vb" />
     <Compile Include="Models\Consensi\ConsensoMaskModel.vb" />
     <Compile Include="Models\HeaderBarViewModel.vb" />
     <Compile Include="Models\WSAPI\HookMaskModel.vb" />
@@ -344,6 +349,11 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\Simple-Line-Icons.dev.svg" />
     <Content Include="Content\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\images\table\sort_asc.png" />
+    <Content Include="Content\images\table\sort_asc_disabled.png" />
+    <Content Include="Content\images\table\sort_both.png" />
+    <Content Include="Content\images\table\sort_desc.png" />
+    <Content Include="Content\images\table\sort_desc_disabled.png" />
     <Content Include="Content\scripts\additional-methods.js" />
     <Content Include="Content\scripts\bootstrap.js" />
     <Content Include="Content\scripts\bootstrap.min.js" />
@@ -477,6 +487,10 @@
     <Content Include="images\menu-toggler.png" />
     <Content Include="images\tracko-favicon.svg" />
     <Content Include="images\tracko-logo-negativo.svg" />
+    <Content Include="images\TrackoImg\Confirm.png" />
+    <Content Include="images\TrackoImg\NotConfirm.png" />
+    <Content Include="images\TrackoImg\smile.png" />
+    <Content Include="images\TrackoImg\warning.png" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.vbhtml" />
@@ -517,11 +531,16 @@
     <Content Include="Views\Accettazioni\Index.vbhtml" />
     <Content Include="Views\AccettazioniStorico\Index.vbhtml" />
     <Content Include="Views\AccettazioniStorico2\Index.vbhtml" />
+    <Content Include="Views\ConfermaConsensi\Index.vbhtml" />
+    <Content Include="Views\Shared\_LayoutConfermaConsensi.vbhtml" />
+    <Content Include="Views\ConfermaConsensi\Feedback.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

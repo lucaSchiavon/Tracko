@@ -71,6 +71,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Back\StoricoConsensiDatiListItem.vb" />
+    <Compile Include="Back\ConsensiDaConfermareListItem.vb" />
     <Compile Include="Back\DatatableResponse\AccettazioniStoricoDtAjaxFilter.vb" />
     <Compile Include="Back\DatatableResponse\AccettazioniStoricoDtAjaxPost.vb" />
     <Compile Include="Back\PermessiListValue.vb" />

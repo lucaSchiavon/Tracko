@@ -63,6 +63,14 @@ Public Class ManagerContatti
 
     End Function
 
+    Public Function GetContatto(Optional ByVal Id As Integer = 0,
+                                     Optional ByVal Contatto As String = "",
+                                     Optional ByVal GuidKey As String = "") As Contatto
+
+        Return New ContattoRepository().Contatto_GetContatto(Id, Contatto, GuidKey)
+
+    End Function
+
 #End Region
 
 #Region "Storico Accettazioni"
@@ -78,6 +86,8 @@ Public Class ManagerContatti
         Return New ContattoRepository().Contatto_RiepilogoStatoConsensi(_ClienteId, ContattoId)
 
     End Function
+
+
 
 #End Region
 

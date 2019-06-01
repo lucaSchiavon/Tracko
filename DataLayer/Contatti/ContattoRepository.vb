@@ -83,6 +83,69 @@ Public Class ContattoRepository
 
     End Function
 
+
+    Public Function Contatto_GetContatto(Optional ByVal Id As Integer = 0,
+                                     Optional ByVal Contatto As String = "",
+                                     Optional ByVal GuidKey As String = "") As Contatto
+
+
+
+        If String.IsNullOrWhiteSpace(Contatto) Then
+            Contatto = String.Empty
+        End If
+
+        If Len(Contatto) > 250 Then
+            Contatto = Left(Contatto, 250)
+        End If
+
+        If String.IsNullOrWhiteSpace(GuidKey) Then
+            GuidKey = String.Empty
+        End If
+
+        Using ConnectionMananger As New ConnectionMananger()
+
+
+            ConnectionMananger.AddOrReplaceParameter("Id", Id, SqlDbType.Int)
+            ConnectionMananger.AddOrReplaceParameter("Contatto", Contatto)
+            If String.IsNullOrWhiteSpace(GuidKey) Then
+                ConnectionMananger.AddOrReplaceParameter("GuidKey", DBNull.Value, SqlDbType.UniqueIdentifier)
+            Else
+                ConnectionMananger.AddOrReplaceParameter("GuidKey", New Guid(GuidKey), SqlDbType.UniqueIdentifier)
+            End If
+
+
+
+            Dim oList As New List(Of Contatto)
+            Dim dr As DbDataReader = ConnectionMananger.GetDataReader("[Contatti].[Contatti_GetContatto]", CommandType.StoredProcedure)
+
+            If dr.HasRows Then
+                While dr.Read()
+                    Dim oItem As New Contatto
+                    With oItem
+                        .Id = dr("Id")
+                        .ClienteId = dr("ClienteId")
+                        .Contatto = dr("Contatto")
+                        .GuidKey = dr("GuidKey").ToString()
+                        .IsAnonimized = dr("IsAnonimized")
+                        .IsDeleted = False
+                        If IsDBNull(dr("LinguaId")) Then
+                            'set default (italiano)
+                            'todo:sbagliato, qui non arriva la lingua degli utenti
+                            .LinguaId = 1
+                        Else
+                            .LinguaId = dr("LinguaId")
+                        End If
+
+                    End With
+                    oList.Add(oItem)
+                End While
+            End If
+
+            Return oList.FirstOrDefault()
+
+        End Using
+
+    End Function
 #End Region
 
 #Region "Richiesta Contatto"
